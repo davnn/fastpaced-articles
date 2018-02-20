@@ -103,19 +103,6 @@ main = print "Hello World"
 
 Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
 
-
-## Footnotes
-
----
-
-Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.^[Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.]
-
-## Citations
-
----
-
-Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.[@small]
-
 ## Images
 
 ---
@@ -133,3 +120,15 @@ Lorem Ipsum is placeholder text commonly used in the graphic, print, and publish
 ![Normal Image](/assets/images/galaxy.jpg)
 
 Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
+
+## Footnotes
+
+---
+
+Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.^[Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.]
+
+## Citations
+
+---
+
+Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.[@small]
