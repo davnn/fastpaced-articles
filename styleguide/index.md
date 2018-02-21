@@ -1,9 +1,9 @@
 ---
-title: "Styleguide"
+title: "The Curious Observer"
 published: 2018-01-01
 author: David Muhr
 mathematics: true
-teaser: Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
+teaser: This is a showcase of the different styles used on this blog. Curious Observer is powered by Hakyll, the Haskell static site generator.  The focus lies on readability and simplicity.
 ---
 
 ## Headlines
