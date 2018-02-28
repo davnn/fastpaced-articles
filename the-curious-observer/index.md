@@ -109,15 +109,7 @@ Lorem Ipsum is placeholder text commonly used in the graphic, print, and publish
 
 Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
 
-![Blank image](/assets/images/galaxy.jpg)\
-
-Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
-
-![Full-width Image](/assets/images/galaxy.jpg){.full-width}
-
-Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
-
-![Normal Image](/assets/images/galaxy.jpg)
+![Image](/assets/images/galaxy.jpg)
 
 Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
 
