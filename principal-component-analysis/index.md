@@ -1,0 +1,198 @@
+---
+title: "Principal Component Analysis"
+published: 2018-02-20
+author: David Muhr
+mathematics: true
+teaser: Principal component analysis (PCA) is a popular dimensionality reduction procedure that uses a linear transformation.
+---
+
+A data set can be described by a matrix $X$: we have some number of measurements $n$, each with a number of attributes $m$. The data set can be represented as a Matrix $\mathbb{R}^{n \times m}$.
+
+The goals of PCA are: (1) minimize redundancy in our data set and (2) maximize variance for each axis.
+
+![Correlation and Redundancy[@Shlens:2014vi]](redundancy.png){.width4}
+
+PCA comes with assumptions:
+
+1. *Linearity & Orthogonality* - we restrict ourselves to a simple change of basis with an orthogonal linear transformation matrix
+3. *Greater Variance Means Greater Information*, directions with greater variance are assumed to represent more interesting structure 
+
+PCA is trying to solve that problem by finding a set of basis vectors that better express our data. That is, we want to find a linear transformation $P$ that transforms $X$ into a matrix $Y$.
+
+$$P.X = Y$$
+
+Let's calculate an example PCA with Mathematica. We should first generate some example data.
+
+```mathematica
+distribution = MultinormalDistribution[{1, 2}, {{1, .5}, {.5, 1}}];
+```
+
+![Two-Dimensional Example Distribution](distribution.png){.width4}
+
+We create $10000$ data points that follow our specified distribution.
+
+```mathematica
+data = RandomVariate[distribution, 10^4];
+```
+
+![Raw Example Data](data.png){.width4}
+
+### Standardization
+
+Standardization is also known as feature scaling and there are [different ways to scale variables](https://en.wikipedia.org/wiki/Feature_scaling). It's on us to decide if there are features that should contribute more or less.
+
+In our example we know that the data is normally distributed and we want to scale our variables to mean $0$ and standard deviation $1$, also known as [standard normalization](https://en.wikipedia.org/wiki/Normalization_(statistics)): $X - \mu \over \sigma$.
+
+```mathematica
+standardize[A_] := (A - Mean[A])/StandardDeviation[A];
+```
+
+Keep in mind that we want to standardize each feature (column) not each observation (row).
+
+```mathematica
+data = Map[standardize, Transpose[data]] // Transpose;
+```
+
+![Standardized Example Data](data-standardized.png)
+
+### Covariance Matrix
+
+Each observation can be seen as a point in $m$-dimensional space. [Covariance](http://mathworld.wolfram.com/Covariance.html) is the sum of signed squares between all points. Covariance thus tells us if the values tend to increase or decrease together.
+
+$$\text{cov}(x,y) = E[(x_i - \bar x)(y_i - \bar y)]$$
+
+![Covariance as the Sum of Signed Squares[@Hedderich:2015ge]](covariance.png){.width3}
+
+The covariance matrix (positive semi-definite $\mathbb R^{m \times m}$) is the collection of covariances between all features. Note that the covariance of a feature with itself is the variance of that feature, thus the diagonal of the covariance matrix is the variance of the corresponding feature.
+
+```mathematica
+covarianceMatrix[A_] := Module[{Ats},
+  Ats = Map[# - Mean[#] &, Transpose[A]];
+  Ats.(Transpose [Ats])/(Length[A] - 1)
+]
+```
+
+Recap that one of our goals was to minimize redundancy in our transformed data set. With the notion of covariance we can state that goal more formally: all off-diagonal items of $\text{covmat}(Y)$ should be zero.
+
+![Covariance Intuition](covariance.gif){.width4}
+
+```mathematica
+covmat = covarianceMatrix[data]
+```
+
+An interesting thing about covariance matrices is that they define a specific linear transformation. A linear transformation in the directions of variance. Can you guess what the covariance matrix of our standardised data looks like?
+
+$$
+\text{covmat} \approxeq
+\left(
+\begin{array}{cc}
+ 1 & \frac{1}{2}  \\
+ \frac{1}{2}  & 1 \\
+\end{array}
+\right)
+$$
+
+Repeatedly applying a linear transformation, in this case our covariance matrix, to a randomly chosen vector $(1,0)$ seems to converge to some direction, but what are those mysterious black arrows?
+
+![Applying the Linear Transformation to a Vector](covariance-transform.gif)
+
+### Eigendecomposition
+
+Eigenvectors are the directions along which a linear transformation acts by stretching/compressing or flipping space. Eigenvalues on the other hand determine the magnitude of the transformation.^[There are excellent introductions to eigenvalues and eigenvectors available online, see [Explained Visually](http://setosa.io/ev/eigenvectors-and-eigenvalues/), [Stackexchange](https://math.stackexchange.com/questions/23312/what-is-the-importance-of-eigenvalues-eigenvectors/23325), [Youtube](https://www.youtube.com/watch?v=PFDu9oVAE-g)]
+
+(@eigeneq) Let $A$ be a square matrix, a scalar $\lambda$ is called **Eigenvalue** of $A$ if there is a *non-zero* vector $v$, called an **Eigenvector**, such that $Av = \lambda v$.
+
+The eigenvalues and eigenvectors can be calculated by directly solving (@eigeneq). Let us therefore rewrite to equation:
+
+$$Av - \lambda v = 0$$
+$$(A - \lambda I) v = 0$$
+
+We have now formed a homogeneous linear system of equations. A homogeneous linear system has a nonzero solution if and only if it's coefficient matrix, in this case $A - \lambda I$, is singular:
+
+$$\text{det}(A - λ I) = 0$$
+
+Let's solve this equation for our simple example to get the eigenvalues.
+
+$$
+\begin{aligned}
+\text{det}
+\left(
+\begin{array}{cc}
+ 1 - \lambda & \frac{1}{2} \\
+ \frac{1}{2} & 1 - \lambda \\
+\end{array}
+\right) = 0 \\
+(1 - \lambda)^2 - \frac{1}{4} = 0 \\
+\lambda_1 = \frac{1}{2}, \lambda_2 = \frac{3}{2}
+\end{aligned}
+$$
+
+We can now solve (@eigeneq) to get the eigenvectors.
+
+$$
+\begin{aligned}
+v_1 + \frac{1}{2}v_2 = \frac{1}{2}v_1 \\
+\frac{1}{2}v_1 + v_2 = \frac{1}{2}v_2 \\
+-v_1 = v_2
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+v_1 + \frac{1}{2}v_2 = \frac{3}{2}v_1 \\
+\frac{1}{2}v_1 + v_2 = \frac{3}{2}v_2 \\
+v_1 = v_2
+\end{aligned}
+$$
+
+A solution for our eigenvectors thus is $(-1, 1)$ and $(1, 1)$ - the mysterious black arrows from the figure above! We can check our solution with:
+
+```mathematica
+Eigensystem[covmat]
+```
+
+### Principal Components
+
+Principal components are defined in a way that the first principal component has the largest possible variance in a specific direction (that is, accounts for as much of the variability in the data as possible), and each succeeding component in turn has the highest variance possible under the constraint that it is orthogonal to the preceding components.
+
+We have to sort all eigenvalues in descending order and choose $k$ eigenvectors that correspond to the $k$ largest eigenvalues. The $k$ chosen vectors are our principal components! Principal components are thus nothing more than sorted, covariance-based, eigenvectors represented as a transformation matrix $P$.
+
+```mathematica
+Transpose[Eigenvectors[covmat]]
+```
+
+$$
+P =
+\left(
+\begin{array}{cc}
+ 1 & -1 \\
+ 1 & 1 \\
+\end{array}
+\right)
+$$
+
+What do you think happens if we apply that transformation matrix to our standardised data set? Notice how the covariance matrix changes.
+
+![Applying the PCA Transformation](pca-projection.gif)
+
+In reality the transformation happens in one step, the dot product of $P.X$. The animation is just for illustrative purposes.
+
+Another challenge is to find a good value for $k$. The sum of all eigenvalues fully explains the variation in the data.
+
+![Explained Variance by Component](explained-variance.png)
+
+In our example the only sensible value for $k$ would be $1$ since we only have $2$ dimensions. It turns out that we will lose $\frac{1}{4}$ of variation by reducing our dataset from two to one dimension.
+
+$$
+P =
+\left(
+\begin{array}{cc}
+ 1 \\
+ 1
+\end{array}
+\right)
+$$
+
+![Dimensionality Reduction Transformation](dimensionality-reduction.gif)
+
+The source for the Mathematica notebook is also [available online](PCA.nb).
