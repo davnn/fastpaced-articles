@@ -6,7 +6,7 @@ mathematics: true
 teaser:  Interpolation is the process of deriving a function from a set of data points so that the function passes through all the given points and can be used to estimate points in-between the given ones.
 ---
 
-Approximating continously defined functions from given discrete data is an unavoidable task in various fields. Interpolation represents the relatively easiest approach, where an approximating function is constructed that has to perfectly agree with the given measurement points.
+Approximating continuously defined functions from given discrete data is an unavoidable task in various fields. Interpolation represents the relatively easiest approach, where an approximating function is constructed that has to perfectly agree with the given points.
 
 If $x_0 \ldots x_n$ and $f(x_0) \ldots f(x_n)$ are known and if $x_0 < x < x_n$, then the estimated value of $f(x)$ is said to be an *Interpolation*. If $x < x_0$ or $x > x_n$ then the estimated value is said to be an *Extrapolation*.
 
@@ -20,15 +20,29 @@ Polynomial interpolation is the interpolation of a given data set by the polynom
 
 Let's work through an example with the following points:
 
-![Example Points](example-data.png)
+$$(0, 4)\qquad (2, 4)\qquad (4, 1)$$
 
-```mathematica
-points = {{0, 4}, {2, 4}, {4, 1}};
-```
+![Example Points](example-data.png)
 
 ## Direct Interpolation
 
-We need at least $n + 1$ data points to solve a polynomial of degree $n$. The resulting polynomial is *unique* because an $n$-degree polynomial has at most $n$ roots. The direct method assumes the following polynomial:
+We need at least $n + 1$ data points to solve a polynomial of degree $n$. The resulting polynomial is *unique* because an $n$-degree polynomial has at most $n$ roots.
+
+:::{.proof}
+Suppose we interpolate through $n + 1$ data points with an $\leq n$ degree polynomial $p(x)$. Suppose another polynomial $q(x)$ exists also of degree $\leq n$ that also interpolates the $n + 1$ points.
+
+1. Consider $r(x) = p(x) - q(x)$
+
+We know that $r(x)$ is is a polynomial of degree at most $n$ because we are just subtracting polynomials. At the $n + 1$ data points $r(x_i) = p(x_i) -q(x_i) = 0$, therefore $r(x)$ has $n + 1$ roots.
+
+2. We get $r(x) = 0$
+
+By the fundamental theorem of algebra $r(x)$ can only have more than $n$ roots if $r(x) = 0$.
+
+3. Therefore $r(x) = 0 \implies p(x) = q(x)$
+:::
+
+The direct method assumes the following polynomial:
 
 $$y=f(x)=c_0+c_1x + c_2 x^2 + \ldots + c_n x^n$$
 
@@ -58,8 +72,7 @@ $$
  c_1 \\
  c_2 \\
 \end{array}
-\right)
-=
+\right) =
 \left(
 \begin{array}{ccc}
  4 \\
@@ -72,6 +85,8 @@ $$
 The polynomial basis looks like $B = \{1, x, x^2, \ldots, x^n\}$, as represented by the columns of the Vandermonde matrix. Our resulting interpolating polynomial is a *linear combination* of this basis.
 
 $$P(x) = 4 + \frac{3}{4}x - \frac{3}{8}x^2$$
+
+Unfortunately we have to invert the Vandermonde matrix to solve for the coefficients $c_0, c_1 \ldots, c_n$. Let's see if we can find a better basis to to find the coefficients.
 
 ## Lagrange Interpolation
 
@@ -91,7 +106,9 @@ p_2(x) = p(x)/(x - 4)
 \end{aligned}
 $$
 
-Notice that we can now create a basis $B = \{\frac{p_0(x)}{p_0(x_0)}, \frac{p_1(x)}{p_1(x_1)}, \ldots, \frac{p_n(x)}{p_n(x_n)}\}$ that satisfies our sought properties. We can then write $P$ as a linear combination of $B$.
+Each of these polynomials is $1$ at a point $x_i$ and simultaneously $0$ at all other points. Because we know the values $y_i$ for each $x_i$ we have found our coefficients without having to invert a matrix!
+
+Notice that we can now create a basis $B = \{\frac{p_0(x)}{p_0(x_0)}, \frac{p_1(x)}{p_1(x_1)}, \ldots, \frac{p_n(x)}{p_n(x_n)}\}$ for which we know that the coefficients are $y_0, y_1 \ldots y_n$. We can again write the polynomial $P$ as a linear combination of our new basis $B$.
 
 $$
 P(x) = 4 \frac{p_0(x)}{p_0(0)} + 4 \frac{p_1(x)}{p_1(2)} + 1 \frac{p_2(x)}{p_2(4)}
@@ -107,7 +124,7 @@ One of the most important features of Newton’s interpolation method is that we
 
 When an additional point $(x_{n+1}, y_{n+1})$ is to be used, all previous basis polynomials and their corresponding coefficients remain unchanged, we only need to obtain a new basis polynomial of degree $n + 1$.
 
-Let's calculate the Newton interpolation for our example.^[A more in-depth tutorial on Newton interpolation can be found [here](http://fourier.eng.hmc.edu/e176/lectures/ch7/node4.html).]
+Let's calculate the Newton interpolation for our example.^[Ruye Wang wrote a more in-depth tutorial on Newton interpolation, and other interpolation methods, which can be found [here](http://fourier.eng.hmc.edu/e176/lectures/ch7/node4.html).]
 
 $$
 \begin{aligned}
@@ -133,8 +150,7 @@ $$
  c_1 \\
  c_2 \\
 \end{array}
-\right)
-=
+\right) =
 \left(
 \begin{array}{ccc}
  4 \\
@@ -144,7 +160,7 @@ $$
 \right)
 $$
 
-We can solve that system of linear equations progressively from top to bottom. In contrast to the other interpolation methods the basis now looks like:
+We can solve that system of linear equations progressively from top to bottom without having to invert the matrix. In contrast to the other interpolation methods the basis now looks like:
 
 $$B = \{1, (x - x_0), (x - x_0)(x - x_1), \ldots, \prod_{i=0}^n(x - x_i)\}$$
 
@@ -177,13 +193,9 @@ P_n(x) & x_{n-1} \le x \le x_n
 \end{array}\right.
 $$
 
-The function $S(x)$ defined by piecewise polynomials is known as a *Spline*. We usually want spline interpolation to consist of low-degree polynomials, to be *continuous* and to be *smooth*.
+The function $S(x)$ defined by piecewise polynomials is known as a *Spline*. We usually want a spline interpolation to consist of low-degree polynomials, to be *continuous* and to be *smooth*.
 
 In other words we want two consecutive piecewise polynomials to meet at some point $P_i(x_i) = P_{i + 1}(x_i)$ and to have the same derivative at that point $P_i^{(k)}(x_i) = P_{i + 1}^{(k)}(x_i)$ where $k$ stands for the *kth*-derivative.
-
-```mathematica
-points = {{0, 4}, {2, 4}, {4, 1}};
-```
 
 ## Linear Splines
 
@@ -191,14 +203,14 @@ A linear spline, as the name implies, describes first-degree polynomials of the 
 
 ![Linear Spline](linear-spline.png)
 
-The *continuity condition* needs $2n$ free parameters to be fulfilled, which means that linear splines can only meet that condition.
+The *continuity condition*, that consecutive polynomials to meet at some point, needs $2n$ free parameters to be fulfilled. Linear splines can thus only fulfill that condition.
 
 $$
 \begin{aligned}
-P_0x_{i - 1}) &= a_0 + a_1 x_{i - 1} ;& 4 &= a_0 + 0 a_1 \\
-P_0(x_i) &= a_0 + a_1 x_i ;& 4 &= a_0 + 2 a_1 \\
-P_1(x_i) &= b_0 + b_1 x_i ;& 4 &= b_0 + 2 b_1 \\
-P_1(x_{i + 1}) &= b_0 + b_1 x_{i + 1} ;& 1 &= b_0 + 4 b_1
+P_0x_{i - 1}) &= a_0 + a_1 x_{i - 1} & 4 &= a_0 + 0 a_1 \\
+P_0(x_i) &= a_0 + a_1 x_i & 4 &= a_0 + 2 a_1 \\
+P_1(x_i) &= b_0 + b_1 x_i & 4 &= b_0 + 2 b_1 \\
+P_1(x_{i + 1}) &= b_0 + b_1 x_{i + 1} & 1 &= b_0 + 4 b_1
 \end{aligned}
 $$
 
@@ -223,27 +235,23 @@ The *smoothness condition* needs $n - 1$ free parameters, because there are $n -
 
 $$
 \begin{aligned}
-P_0(x_{i - 1}) &= a_0 + a_1 x_{i - 1} + a_2 x_{i - 1}^2 ;& 4 &= a_0 + 0 a_1 + 0^2 a_2 \\
-P_0(x_i) &= a_0 + a_1 x_i + a_2 x_i^2 ;& 4 &= a_0 + 2 a_1 + 2^2 a_2 \\
-P_1(x_i) &= b_0 + b_1 x_i + b_2 x_i^2 ;& 4 &= b_0 + 2 b_1 + 2^2 b_2 \\
-P_1(x_{i + 1}) &= b_0 + b_1 x_{i + 1} + b_2 x_{i + 1}^2 ;& 1 &= b_0 + 4 b_1 + 4^2 b_2
+P_0(x_{i - 1}) &= a_0 + a_1 x_{i - 1} + a_2 x_{i - 1}^2 & 4 &= a_0 + 0 a_1 + 0^2 a_2 \\
+P_0(x_i) &= a_0 + a_1 x_i + a_2 x_i^2 & 4 &= a_0 + 2 a_1 + 2^2 a_2 \\
+P_1(x_i) &= b_0 + b_1 x_i + b_2 x_i^2 & 4 &= b_0 + 2 b_1 + 2^2 b_2 \\
+P_1(x_{i + 1}) &= b_0 + b_1 x_{i + 1} + b_2 x_{i + 1}^2 & 1 &= b_0 + 4 b_1 + 4^2 b_2
 \end{aligned}
 $$
 
 We need another equation ($n - 1 = 1$) to make sure that two consecutive polynomials have a common first derivative.
 
 $$
-\begin{aligned}
-P_0'(x_i) &= P_1'(x_i) ;& a_1 + 4 a_2 = b_1 + 4 b_2
-\end{aligned}
+P_0'(x_i) = P_1'(x_i)\qquad a_1 + 4 a_2 = b_1 + 4 b_2
 $$
 
 Now, we have a total of $5$ equations for $3n = 6$ unknown parameters. For us to be able to solve the equations we have $3n - 2n - (n - 1) = 1$ free parameter left. We can choose one more solvable constraint of our liking, for example that the first derivative should be $0$ at the last point.
 
 $$
-\begin{aligned}
-P_1'(x_n) &= 0 ;& 0 = b_1 + 8 b_2
-\end{aligned}
+P_1'(x_n) = 0\qquad 0 = b_1 + 8 b_2
 $$
 
 Our quadratic spline is now defined as:
@@ -267,10 +275,10 @@ We now have $4n$ unknown parameters of which $2n$ are bound by the continuity co
 
 $$
 \begin{aligned}
-P_0(x_{i - 1}) &= a_0 + a_1 x_{i - 1} + a_2 x_{i - 1}^2 + a_3 x_{i - 1}^3 ;& 4 &= a_0 + 0 a_1 + 0^2 a_2 + 0^3 a_3 \\
-P_0(x_i) &= a_0 + a_1 x_i + a_2 x_i^2 + a_3 x_i^3 ;& 4 &= a_0 + 2 a_1 + 2^2 a_2 + 2^3 a_3 \\
-P_1(x_i) &= b_0 + b_1 x_i + b_2 x_i^2 + b_3 x_i^3 ;& 4 &= b_0 + 2 b_1 + 2^2 b_2 + 2^3 b_3 \\
-P_1(x_{i + 1}) &= b_0 + b_1 x_{i + 1} + b_2 x_{i + 1}^2 + b_3 x_{i + 1}^3 ;& 1 &= b_0 + 4 b_1 + 4^2 b_2 + 4^3 b_3
+P_0(x_{i - 1}) &= a_0 + a_1 x_{i - 1} + a_2 x_{i - 1}^2 + a_3 x_{i - 1}^3 & 4 &= a_0 + 0 a_1 + 0^2 a_2 + 0^3 a_3 \\
+P_0(x_i) &= a_0 + a_1 x_i + a_2 x_i^2 + a_3 x_i^3 & 4 &= a_0 + 2 a_1 + 2^2 a_2 + 2^3 a_3 \\
+P_1(x_i) &= b_0 + b_1 x_i + b_2 x_i^2 + b_3 x_i^3 & 4 &= b_0 + 2 b_1 + 2^2 b_2 + 2^3 b_3 \\
+P_1(x_{i + 1}) &= b_0 + b_1 x_{i + 1} + b_2 x_{i + 1}^2 + b_3 x_{i + 1}^3 & 1 &= b_0 + 4 b_1 + 4^2 b_2 + 4^3 b_3
 \end{aligned}
 $$
 
@@ -278,8 +286,8 @@ A further $2(n - 1)$ parameters are bound by the smoothness condition for the fi
 
 $$
 \begin{aligned}
-P_0'(x_i) &= P_1'(x_i) ;& a_1 + 4 a_2 + 12 a_3 &= b_1 + 4 b_2 + 12 b_3 \\
-P_0''(x_i) &= P_1''(x_i) ;& 2 a_2 + 12 a_3 &= 2 b_2 + 12 b_3
+P_0'(x_i) &= P_1'(x_i) & a_1 + 4 a_2 + 12 a_3 &= b_1 + 4 b_2 + 12 b_3 \\
+P_0''(x_i) &= P_1''(x_i) & 2 a_2 + 12 a_3 &= 2 b_2 + 12 b_3
 \end{aligned}
 $$
 
@@ -287,8 +295,8 @@ We now have $4n - 2n - 2(n - 1) = 2$ parameters left for constraints of our choi
 
 $$
 \begin{aligned}
-P_0''(x_0) &= 0 ;& a_1 = 0 \\
-P_1''(x_n) &= 0 ;& b_1 + 8 b_2 + 48 b_3 = 0
+P_0''(x_0) &= 0 & a_1 = 0 \\
+P_1''(x_n) &= 0 & b_1 + 8 b_2 + 48 b_3 = 0
 \end{aligned}
 $$
 
