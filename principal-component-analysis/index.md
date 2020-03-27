@@ -104,8 +104,12 @@ Eigenvectors are the directions along which a linear transformation acts by stre
 
 The eigenvalues and eigenvectors can be calculated by directly solving (@eigeneq). Let us therefore rewrite to equation:
 
-$$Av - \lambda v = 0$$
-$$(A - \lambda I) v = 0$$
+$$
+\begin{aligned}
+Av - \lambda v &= 0\\
+(A - \lambda I) v &=  0
+\end{aligned}
+$$
 
 We have now formed a homogeneous linear system of equations. A homogeneous linear system has a nonzero solution if and only if it's coefficient matrix, in this case $A - \lambda I$, is singular:
 
@@ -197,4 +201,4 @@ $$
 
 ![Dimensionality Reduction Transformation](dimensionality-reduction.gif){.width-medium}
 
-There is a closely related matrix-decomposition technique known as Singular Value Decomposition (SVD) that can be used to calculate the principal components. See Shlens' PCA tutorial for the relationship between PCA and SVD and how to perform an SVD.[@Shlens:2014vi]
+There is a closely related matrix-decomposition technique known as Singular Value Decomposition (SVD) that can be used to calculate the principal components. See Shlens' PCA tutorial for the relationship between PCA and SVD and how to perform an SVD [@Shlens:2014vi].
