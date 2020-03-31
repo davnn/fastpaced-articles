@@ -14,7 +14,7 @@ If $x_0 \ldots x_n$ and $f(x_0) \ldots f(x_n)$ are known and if $x_0 < x < x_n$,
 
 In other words: with interpolation we want to estimate values *between* already known values and with extrapolation we want to estimate values *outside* already known values. 
 
-# Polynomial Interpolation
+## Polynomial Interpolation
 
 Polynomial interpolation is the interpolation of a given data set by the polynomial of lowest possible degree that passes through all points of the dataset. Interpolation inevitably leads to a problem in linear algebra where we have to solve a system of linear equations.
 
@@ -24,7 +24,7 @@ $$(0, 4)\qquad (2, 4)\qquad (4, 1)$$
 
 ![Example Points](example-data.png)
 
-## Direct Interpolation
+### Direct Interpolation
 
 We need at least $n + 1$ data points to solve a polynomial of degree $n$. The resulting polynomial is *unique* because an $n$-degree polynomial has at most $n$ roots.
 
@@ -88,7 +88,7 @@ $$P(x) = 4 + \frac{3}{4}x - \frac{3}{8}x^2$$
 
 Unfortunately we have to invert the Vandermonde matrix to solve for the coefficients $c_0, c_1 \ldots, c_n$. Let's see if we can find a better basis to to find the coefficients.
 
-## Lagrange Interpolation
+### Lagrange Interpolation
 
 Lagrange polynomials are based on the beautiful idea that you could express the interpolating polynomial $P$ as a linear combination of polynomials $p_0 \ldots p_n$, that individually fit a specific given point.^[MathTheBeautiful offers a series of videos on polynomial interpolation that contains an [introduction to Lagrange polynomials](https://www.youtube.com/watch?v=XK4G5Ndy-m8).]
 
@@ -118,7 +118,7 @@ Keep in mind that this [intuitive way of writing Lagrange polynomials](https://m
 
 $$P(x) = 4 + \frac{3}{4}x - \frac{3}{8}x^2$$
 
-## Newton Interpolation
+### Newton Interpolation
 
 One of the most important features of Newton’s interpolation method is that we can gradually increase the interpolated data points without recomputing what is already computed.
 
@@ -168,7 +168,7 @@ If we need to interpolate another point we can reuse our previous results and so
 
 $$P(x) = 4 + 0(x-0) - \frac{3}{8}(x-0)(x-2) = 4 + \frac{3}{4}x - \frac{3}{8}x^2$$
 
-# Runge's Phenomenon
+### Runge's Phenomenon
 
 We have now seen that all polynomial interpolation methods for $n + 1$ data points result in the same unique polynomial of degree $n$. All of the methods for polynomial interpolation were expressed in terms of a basis $B$ weighted by some coefficients. The interpolating polynomial for our previous example looks as follows:
 
@@ -180,7 +180,7 @@ A problem that arises with polynomial interpolation is the interpolating functio
 
 Another limitation of polynomial interpolation is that touching a single point causes a recalculation of all other points.
 
-# Piecewise Interpolation
+## Piecewise Interpolation
 
 To adress the limitations mentioned we could combine multiple polynomials of lower degree that each fit an interval between two points.
 
@@ -197,7 +197,7 @@ The function $S(x)$ defined by piecewise polynomials is known as a *Spline*. We 
 
 In other words we want two consecutive piecewise polynomials to meet at some point $P_i(x_i) = P_{i + 1}(x_i)$ and to have the same derivative at that point $P_i^{(k)}(x_i) = P_{i + 1}^{(k)}(x_i)$ where $k$ stands for the *kth*-derivative.
 
-## Linear Splines
+### Linear Splines
 
 A linear spline, as the name implies, describes first-degree polynomials of the form $P(x) = c_0 + c_1 x$. Each linear polynomial has $2$ unkown parameters, our spline of $n$ piecewise polynomials for $n + 1$ data points thus has a total of $2n$ unknown parameters.
 
@@ -225,7 +225,7 @@ P_1(x) = 7 - \frac{3}{2}x & 2 \le x \le 4
 \end{array}\right.
 $$
 
-## Quadratic Splines
+### Quadratic Splines
 
 Quadratic polynomials add one more degree of freedom and quadratic splines consequently have $3n$ unknown parameters. Again, we need $2n$ parameters for continuity, but we can now also specify that two consecutive polynomials should match in their first derivative.
 
@@ -265,7 +265,7 @@ P_1(x) = 13 - 6x + \frac{3}{4}x^2 & 2 \le x \le 4
 \end{array}\right.
 $$
 
-## Cubic Splines
+### Cubic Splines
 
 With another degree of freedom we can specifiy that two consecutive polynomials share a common first and second derivative at the point they meet.
 

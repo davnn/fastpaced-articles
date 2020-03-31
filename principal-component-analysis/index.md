@@ -37,7 +37,7 @@ data = RandomVariate[distribution, 10^4];
 
 ![Raw Example Data](data.png){.width-medium}
 
-### Standardization
+## Standardization
 
 Standardization is also known as feature scaling and there are [different ways to scale variables](https://en.wikipedia.org/wiki/Feature_scaling). It's on us to decide if there are features that should contribute more or less.
 
@@ -55,7 +55,7 @@ data = Map[standardize, Transpose[data]] // Transpose;
 
 ![Standardized Example Data](data-standardized.png){.width-medium}
 
-### Covariance Matrix
+## Covariance Matrix
 
 Each observation can be seen as a point in $m$-dimensional space. [Covariance](http://mathworld.wolfram.com/Covariance.html) is the sum of signed squares between all points. Covariance thus tells us if the values tend to increase or decrease together.
 
@@ -96,7 +96,7 @@ Repeatedly applying a linear transformation, in this case our covariance matrix,
 
 ![Applying the Linear Transformation to a Vector](covariance-transform.gif){.width-medium}
 
-### Eigendecomposition
+## Eigendecomposition
 
 Eigenvectors are the directions along which a linear transformation acts by stretching/compressing or flipping space. Eigenvalues on the other hand determine the magnitude of the transformation.^[There are excellent introductions to eigenvalues and eigenvectors available online, see [Explained Visually](http://setosa.io/ev/eigenvectors-and-eigenvalues/), [Stackexchange](https://math.stackexchange.com/questions/23312/what-is-the-importance-of-eigenvalues-eigenvectors/23325), [Youtube](https://www.youtube.com/watch?v=PFDu9oVAE-g)]
 
@@ -104,12 +104,8 @@ Eigenvectors are the directions along which a linear transformation acts by stre
 
 The eigenvalues and eigenvectors can be calculated by directly solving (@eigeneq). Let us therefore rewrite to equation:
 
-$$
-\begin{aligned}
-Av - \lambda v &= 0\\
-(A - \lambda I) v &=  0
-\end{aligned}
-$$
+$$Av - \lambda v = 0$$
+$$(A - \lambda I) v = 0$$
 
 We have now formed a homogeneous linear system of equations. A homogeneous linear system has a nonzero solution if and only if it's coefficient matrix, in this case $A - \lambda I$, is singular:
 
@@ -155,7 +151,7 @@ A solution for our eigenvectors thus is $(-1, 1)$ and $(1, 1)$ - the mysterious 
 Eigensystem[covmat]
 ```
 
-### Principal Components
+## Principal Components
 
 Principal components are defined in a way that the first principal component has the largest possible variance in a specific direction (that is, accounts for as much of the variability in the data as possible), and each succeeding component in turn has the highest variance possible under the constraint that it is orthogonal to the preceding components.
 
@@ -201,4 +197,4 @@ $$
 
 ![Dimensionality Reduction Transformation](dimensionality-reduction.gif){.width-medium}
 
-There is a closely related matrix-decomposition technique known as Singular Value Decomposition (SVD) that can be used to calculate the principal components. See Shlens' PCA tutorial for the relationship between PCA and SVD and how to perform an SVD [@Shlens:2014vi].
+There is a closely related matrix-decomposition technique known as Singular Value Decomposition (SVD) that can be used to calculate the principal components. See Shlens' PCA tutorial for the relationship between PCA and SVD and how to perform an SVD.[@Shlens:2014vi]
