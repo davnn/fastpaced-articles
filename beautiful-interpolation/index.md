@@ -3,7 +3,7 @@ title: "Beautiful Interpolation"
 published: 2018-03-01
 author: David Muhr
 mathematics: true
-teaser:  Interpolation is the process of deriving a function from a set of data points so that the function passes through all the given points and can be used to estimate points in-between the given ones.
+abstract:  Interpolation is the process of deriving a function from a set of data points so that the function passes through all the given points and can be used to estimate points in-between the given ones.
 ---
 
 Approximating continuously defined functions from given discrete data is an unavoidable task in various fields. Interpolation represents the relatively easiest approach, where an approximating function is constructed that has to perfectly agree with the given points.

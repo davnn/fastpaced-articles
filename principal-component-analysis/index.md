@@ -3,7 +3,7 @@ title: "Principal Component Analysis"
 published: 2018-02-20
 author: David Muhr
 mathematics: true
-teaser: Principal component analysis (PCA) is a popular dimensionality reduction procedure that uses a linear transformation to express data in a more suitable basis that preserves most variation in the data.
+abstract: Principal component analysis (PCA) is a popular dimensionality reduction procedure that uses a linear transformation to express data in a more suitable basis that preserves most variation in the data.
 ---
 
 A data set of of real-valued measurements can be described by a matrix $X$. We have some number of measurements $n$, each with a number of attributes $m$, thus $X$ can be represented as a Matrix $\mathbb{R}^{n \times m}$.

@@ -3,7 +3,7 @@ title: "The Styleguide"
 published: 2018-01-01
 author: David Muhr
 mathematics: true
-teaser: This is a showcase of the different styles used on this blog. This blog is powered by Hakyll, the Haskell static site generator. The focus lies on readability and simplicity.
+abstract: This is a showcase of the different styles used on this blog. This blog is powered by Hakyll, the Haskell static site generator. The focus lies on readability and simplicity.
 ---
 
 ## Headlines
