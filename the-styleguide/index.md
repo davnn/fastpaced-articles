@@ -3,6 +3,7 @@ title: "The Styleguide"
 published: 2018-01-01
 author: David Muhr
 mathematics: true
+centered: true
 abstract: This is a showcase of the different styles used on this blog. This blog is powered by Hakyll, the Haskell static site generator. The focus lies on readability and simplicity.
 ---
 
@@ -76,6 +77,18 @@ $$a + b = 2$$
 
 Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
 
+:::{.definition}
+There is an option to make definitions stand out.
+:::
+
+:::{.theorem}
+There is an option to make theorem stand out.
+:::
+
+:::{.proof}
+There is an option to make proofs stand out.
+:::
+
 ## Tables
 
 ---
@@ -96,7 +109,12 @@ Lorem Ipsum is placeholder text commonly used in the graphic, print, and publish
 
 Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
 
-``` haskell
+``` {.haskell}
+main :: IO()
+main = print "Hello World"
+```
+
+``` {.haskell .width-full}
 main :: IO()
 main = print "Hello World"
 ```
@@ -109,7 +127,16 @@ Lorem Ipsum is placeholder text commonly used in the graphic, print, and publish
 
 Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
 
-![Image](/assets/images/galaxy.jpg)
+![A huge image](/assets/images/galaxy.jpg)
+
+![A full image](/assets/images/galaxy.jpg){.width-full}
+
+![A large image](/assets/images/galaxy.jpg){.width-large}
+
+![A medium image](/assets/images/galaxy.jpg){.width-medium}
+
+![A small image](/assets/images/galaxy.jpg){.width-small}
+
 
 Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
 
@@ -123,4 +150,4 @@ Lorem Ipsum is placeholder text commonly used in the graphic, print, and publish
 
 ---
 
-Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.[@small]
+Lorem Ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups [@small].

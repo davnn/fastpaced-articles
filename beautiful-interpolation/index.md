@@ -10,26 +10,32 @@ Approximating continuously defined functions from given discrete data is an unav
 
 If $x_0 \ldots x_n$ and $f(x_0) \ldots f(x_n)$ are known and if $x_0 < x < x_n$, then the estimated value of $f(x)$ is said to be an *Interpolation*. If $x < x_0$ or $x > x_n$ then the estimated value is said to be an *Extrapolation*.
 
-![Interpolation and Extrapolation](interpolation-extrapolation.png)
+![Interpolation and Extrapolation](interpolation-extrapolation.png){.width-medium}
 
-In other words: with interpolation we want to estimate values *between* already known values and with extrapolation we want to estimate values *outside* already known values. 
+In other words: with interpolation, we want to estimate values *between* already known values, and with extrapolation, we want to estimate values *outside* already known values. 
 
 ## Polynomial Interpolation
 
-Polynomial interpolation is the interpolation of a given data set by the polynomial of lowest possible degree that passes through all points of the dataset. Interpolation inevitably leads to a problem in linear algebra where we have to solve a system of linear equations.
+Polynomial interpolation interpolates a given data set by the polynomial of the lowest possible degree that passes through all the dataset points. Interpolation inevitably leads to a problem in linear algebra where we have to solve a system of linear equations.
 
-Let's work through an example with the following points:
+Let's work through an example with the points
 
-$$(0, 4)\qquad (2, 4)\qquad (4, 1)$$
+$$(0, 4)\qquad (2, 4)\qquad (4, 1).$$
 
-![Example Points](example-data.png)
+The example points can be visualized as follows.
+
+![Example Points](example-data.png){.width-medium}
 
 ### Direct Interpolation
 
-We need at least $n + 1$ data points to solve a polynomial of degree $n$. The resulting polynomial is *unique* because an $n$-degree polynomial has at most $n$ roots.
+We need at least $n + 1$ data points to solve a polynomial of degree $n$. 
+
+:::{.theorem}
+The resulting polynomial is *unique* because an $n$-degree polynomial has at most $n$ roots.
+:::
 
 :::{.proof}
-Suppose we interpolate through $n + 1$ data points with an $\leq n$ degree polynomial $p(x)$. Suppose another polynomial $q(x)$ exists also of degree $\leq n$ that also interpolates the $n + 1$ points.
+Suppose we interpolate through $n + 1$ data points with a polynomial $p(x)$ of degree $\leq n$. Suppose another polynomial $q(x)$ exists also of degree $\leq n$ that also interpolates the $n + 1$ points.
 
 1. Consider $r(x) = p(x) - q(x)$
 
@@ -86,7 +92,7 @@ The polynomial basis looks like $B = \{1, x, x^2, \ldots, x^n\}$, as represented
 
 $$P(x) = 4 + \frac{3}{4}x - \frac{3}{8}x^2$$
 
-Unfortunately we have to invert the Vandermonde matrix to solve for the coefficients $c_0, c_1 \ldots, c_n$. Let's see if we can find a better basis to to find the coefficients.
+Unfortunately, we have to invert the Vandermonde matrix to solve for the coefficients $c_0, c_1 \ldots, c_n$. Let's see if we can find a better basis to find the coefficients.
 
 ### Lagrange Interpolation
 
@@ -106,7 +112,7 @@ p_2(x) = p(x)/(x - 4)
 \end{aligned}
 $$
 
-Each of these polynomials is $1$ at a point $x_i$ and simultaneously $0$ at all other points. Because we know the values $y_i$ for each $x_i$ we have found our coefficients without having to invert a matrix!
+Each of these polynomials is $1$ at a point $x_i$, and simultaneously $0$ at all other points. Because we know the values $y_i$ for each $x_i$, we have found our coefficients without having to invert a matrix!
 
 Notice that we can now create a basis $B = \{\frac{p_0(x)}{p_0(x_0)}, \frac{p_1(x)}{p_1(x_1)}, \ldots, \frac{p_n(x)}{p_n(x_n)}\}$ for which we know that the coefficients are $y_0, y_1 \ldots y_n$. We can again write the polynomial $P$ as a linear combination of our new basis $B$.
 
@@ -122,9 +128,9 @@ $$P(x) = 4 + \frac{3}{4}x - \frac{3}{8}x^2$$
 
 One of the most important features of Newton’s interpolation method is that we can gradually increase the interpolated data points without recomputing what is already computed.
 
-When an additional point $(x_{n+1}, y_{n+1})$ is to be used, all previous basis polynomials and their corresponding coefficients remain unchanged, we only need to obtain a new basis polynomial of degree $n + 1$.
+When an additional point $(x_{n+1}, y_{n+1})$ is to be used, all previous basis polynomials and their corresponding coefficients remain unchanged, and we only need to obtain a new basis polynomial of degree $n + 1$.
 
-Let's calculate the Newton interpolation for our example.^[Ruye Wang wrote a more in-depth tutorial on Newton interpolation, and other interpolation methods, which can be found [here](http://fourier.eng.hmc.edu/e176/lectures/ch7/node4.html).]
+Let's calculate the Newton interpolation for our example.^[Ruye Wang wrote a more in-depth tutorial on Newton interpolation and other interpolation methods, which can be found [here](http://fourier.eng.hmc.edu/e176/lectures/ch7/node4.html).]
 
 $$
 \begin{aligned}
@@ -134,7 +140,7 @@ $$
 \end{aligned}
 $$
 
-We can simplify that expression and write it in matrix form:
+We can simplify that expression and write it in matrix form
 
 $$
 \left(
@@ -157,32 +163,32 @@ $$
  4 \\
  1 \\
 \end{array}
-\right)
+\right).
 $$
 
-We can solve that system of linear equations progressively from top to bottom without having to invert the matrix. In contrast to the other interpolation methods the basis now looks like:
+We can solve that system of linear equations progressively from top to bottom without having to invert the matrix. In contrast to the other interpolation methods, the basis now looks like
 
-$$B = \{1, (x - x_0), (x - x_0)(x - x_1), \ldots, \prod_{i=0}^n(x - x_i)\}$$
+$$B = \{1, (x - x_0), (x - x_0)(x - x_1), \ldots, \prod_{i=0}^n(x - x_i)\}.$$
 
-If we need to interpolate another point we can reuse our previous results and solve another row.
+If we need to interpolate another point, we can reuse our previous results and solve another row.
 
 $$P(x) = 4 + 0(x-0) - \frac{3}{8}(x-0)(x-2) = 4 + \frac{3}{4}x - \frac{3}{8}x^2$$
 
 ### Runge's Phenomenon
 
-We have now seen that all polynomial interpolation methods for $n + 1$ data points result in the same unique polynomial of degree $n$. All of the methods for polynomial interpolation were expressed in terms of a basis $B$ weighted by some coefficients. The interpolating polynomial for our previous example looks as follows:
+We have now seen that all polynomial interpolation methods for $n + 1$ data points result in the same unique polynomial of degree $n$. All of the methods for polynomial interpolation were expressed in terms of a basis $B$ weighted by some coefficients. The interpolating polynomial for our previous example looks as follows.
 
-![Interpolating Polynomial of 3 Points](interpolating-polynomial.png)
+![Interpolating Polynomial of 3 Points](interpolating-polynomial.png){.width-medium}
 
 A problem that arises with polynomial interpolation is the interpolating function tends to oscillate more and more with more points added. This is called the *Runge's phenomenon*. It limits the use cases where simple polynomial interpolation is appropriate.
 
-![Interpolating Polynomial of 10 Points](runge-phenomenon.png)
+![Interpolating Polynomial of 10 Points](runge-phenomenon.png){.width-medium}
 
 Another limitation of polynomial interpolation is that touching a single point causes a recalculation of all other points.
 
 ## Piecewise Interpolation
 
-To adress the limitations mentioned we could combine multiple polynomials of lower degree that each fit an interval between two points.
+To address the limitations mentioned, we could combine multiple polynomials of lower degree that each fit an interval between two points.
 
 $$
 S(x)=
@@ -201,7 +207,7 @@ In other words we want two consecutive piecewise polynomials to meet at some poi
 
 A linear spline, as the name implies, describes first-degree polynomials of the form $P(x) = c_0 + c_1 x$. Each linear polynomial has $2$ unkown parameters, our spline of $n$ piecewise polynomials for $n + 1$ data points thus has a total of $2n$ unknown parameters.
 
-![Linear Spline](linear-spline.png)
+![Linear Spline](linear-spline.png){.width-medium}
 
 The *continuity condition*, that consecutive polynomials to meet at some point, needs $2n$ free parameters to be fulfilled. Linear splines can thus only fulfill that condition.
 
@@ -227,9 +233,9 @@ $$
 
 ### Quadratic Splines
 
-Quadratic polynomials add one more degree of freedom and quadratic splines consequently have $3n$ unknown parameters. Again, we need $2n$ parameters for continuity, but we can now also specify that two consecutive polynomials should match in their first derivative.
+Quadratic polynomials add one more degree of freedom, and quadratic splines consequently have $3n$ unknown parameters. Again, we need $2n$ parameters for continuity, but we can now also specify that two consecutive polynomials should match in their first derivative.
 
-![Quadratic Spline](quadratic-spline.png)
+![Quadratic Spline](quadratic-spline.png){.width-medium}
 
 The *smoothness condition* needs $n - 1$ free parameters, because there are $n - 1$ "inner points" for $n + 1$ data points.
 
@@ -248,13 +254,13 @@ $$
 P_0'(x_i) = P_1'(x_i)\qquad a_1 + 4 a_2 = b_1 + 4 b_2
 $$
 
-Now, we have a total of $5$ equations for $3n = 6$ unknown parameters. For us to be able to solve the equations we have $3n - 2n - (n - 1) = 1$ free parameter left. We can choose one more solvable constraint of our liking, for example that the first derivative should be $0$ at the last point.
+Now, we have a total of $5$ equations for $3n = 6$ unknown parameters. For us to be able to solve the equations we have $3n - 2n - (n - 1) = 1$ free parameter left. We can choose one more solvable constraint of our liking, for example, that the first derivative should be $0$ at the last point.
 
 $$
 P_1'(x_n) = 0\qquad 0 = b_1 + 8 b_2
 $$
 
-Our quadratic spline is now defined as:
+Our quadratic spline is now defined as
 
 $$
 S(x)=
@@ -262,14 +268,14 @@ S(x)=
 P_0(x) = 4 + 3x - \frac{3}{2}x^2 & 0 \le x \le 2 \\
 & \\
 P_1(x) = 13 - 6x + \frac{3}{4}x^2 & 2 \le x \le 4
-\end{array}\right.
+\end{array}\right..
 $$
 
 ### Cubic Splines
 
-With another degree of freedom we can specifiy that two consecutive polynomials share a common first and second derivative at the point they meet.
+With another degree of freedom, we can specify that two consecutive polynomials share a common first and second derivative at the point they meet.
 
-![Cubic Spline](cubic-spline.png)
+![Cubic Spline](cubic-spline.png){.width-medium}
 
 We now have $4n$ unknown parameters of which $2n$ are bound by the continuity condition.
 
@@ -282,7 +288,7 @@ P_1(x_{i + 1}) &= b_0 + b_1 x_{i + 1} + b_2 x_{i + 1}^2 + b_3 x_{i + 1}^3 & 1 &=
 \end{aligned}
 $$
 
-A further $2(n - 1)$ parameters are bound by the smoothness condition for the first and second derivative.
+A further $2(n - 1)$ parameters are bound by the smoothness condition for the first and second derivatives.
 
 $$
 \begin{aligned}
@@ -300,7 +306,7 @@ P_1''(x_n) &= 0 & b_1 + 8 b_2 + 48 b_3 = 0
 \end{aligned}
 $$
 
-Our cubic spline is now defined as:
+Our cubic spline is now defined as
 
 $$
 S(x)=
@@ -308,7 +314,7 @@ S(x)=
 P_0(x) = 4 + \frac{9}{16}x^2 - \frac{9}{32}x^3 & 0 \le x \le 2 \\
 & \\
 P_1(x) = -2 + 9x - \frac{63}{16}x^2 + \frac{15}{32}x^3 & 2 \le x \le 4
-\end{array}\right.
+\end{array}\right..
 $$
 
 The following constraints are often used for the two free parameters:
