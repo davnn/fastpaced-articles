@@ -23,6 +23,10 @@ jobs:
           PR_TITLE=":memo: Update articles"  # Title of the PR
           PR_BODY="This PR was created automatically."  # Body of the PR
 
+          # Set up git identity
+          git config --global user.email "muhrdavid+github@gmail.com"
+          git config --global user.name "David Muhr"
+
           # Create a new branch for the PR
           git checkout -b $BRANCH_NAME
           # Make any changes here if necessary
