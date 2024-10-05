@@ -1,0 +1,42 @@
+on:
+  push:
+    branches: [ main ]
+
+name: update
+jobs:
+  run:
+    name: Create PR with updated articles
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          name: davnn/fastpaced
+
+      - name: Update submodule
+        run: git submodule update --init
+
+      - name: Create a PR in target repo
+        run: |
+          TARGET_REPO="davnn/fastpaced"  # Replace with the target repo
+          BRANCH_NAME="update-articles"  # Replace with your branch name
+          PR_TITLE=":memo: Update articles"  # Title of the PR
+          PR_BODY="This PR was created automatically."  # Body of the PR
+
+          # Create a new branch for the PR
+          git checkout -b $BRANCH_NAME
+          # Make any changes here if necessary
+          git commit -m ":memo: Update articles"
+          git push origin $BRANCH_NAME
+
+          # Create a pull request
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/$TARGET_REPO/pulls \
+            -d '{
+              "title": "'"$PR_TITLE"'",
+              "head": "'"$BRANCH_NAME"'",
+              "base": "main",  # Base branch in the target repo
+              "body": "'"$PR_BODY"'"
+            }'
