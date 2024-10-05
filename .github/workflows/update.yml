@@ -11,17 +11,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          name: davnn/fastpaced
+          repository: davnn/fastpaced
 
       - name: Update submodule
-        run: git submodule update --init
+        run: git submodule update --init --remote
 
       - name: Create a PR in target repo
         run: |
-          TARGET_REPO="davnn/fastpaced"  # Replace with the target repo
-          BRANCH_NAME="update-articles"  # Replace with your branch name
-          PR_TITLE=":memo: Update articles"  # Title of the PR
-          PR_BODY="This PR was created automatically."  # Body of the PR
+          TARGET_REPO="davnn/fastpaced"
+          BRANCH_NAME="update-articles"
+          PR_TITLE=":memo: Update articles"
+          PR_BODY="This PR was created automatically."
 
           # Set up git identity
           git config --global user.email "muhrdavid+github@gmail.com"
@@ -30,7 +30,7 @@ jobs:
           # Create a new branch for the PR
           git checkout -b $BRANCH_NAME
           # Make any changes here if necessary
-          git commit -m ":memo: Update articles"
+          git commit -am ":memo: Update articles"
           git push origin $BRANCH_NAME
 
           # Create a pull request
