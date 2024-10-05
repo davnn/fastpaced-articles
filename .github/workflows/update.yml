@@ -34,7 +34,7 @@ jobs:
           git checkout -b $BRANCH_NAME
 
           # Make any changes here if necessary
-          git commit -am ":memo: Update articles"
+          git commit -am "$PR_TITLE [skip ci]"
 
           # Push the changes to the remote
           git push origin $BRANCH_NAME -f
