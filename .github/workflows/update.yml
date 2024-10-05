@@ -17,6 +17,8 @@ jobs:
         run: git submodule update --init --remote
 
       - name: Create a PR in target repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TARGET_REPO="davnn/fastpaced"
           BRANCH_NAME="update-articles"
@@ -31,6 +33,8 @@ jobs:
           git checkout -b $BRANCH_NAME
           # Make any changes here if necessary
           git commit -am ":memo: Update articles"
+
+          # Push the changes to the remote
           git push origin $BRANCH_NAME
 
           # Create a pull request
