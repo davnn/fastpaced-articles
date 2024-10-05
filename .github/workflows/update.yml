@@ -23,7 +23,7 @@ jobs:
         run: |
           TARGET_REPO="davnn/fastpaced"
           BRANCH_NAME="update-articles"
-          PR_TITLE=":memo: Update articles"
+          PR_TITLE=":memo: Automatically update articles"
           PR_BODY="This PR was created automatically."
 
           # Set up git identity
