@@ -10,7 +10,7 @@ Approximating continuously defined functions from given discrete data is an unav
 
 If $x_0 \ldots x_n$ and $f(x_0) \ldots f(x_n)$ are known and if $x_0 < x < x_n$, then the estimated value of $f(x)$ is said to be an *Interpolation*. If $x < x_0$ or $x > x_n$ then the estimated value is said to be an *Extrapolation*.
 
-![Interpolation and Extrapolation](interpolation-extrapolation.png){.width-medium}
+![Interpolation and Extrapolation](interpolation-extrapolation.png){.width-medium .themed}
 
 In other words: with interpolation, we want to estimate values *between* already known values, and with extrapolation, we want to estimate values *outside* already known values. 
 
@@ -24,7 +24,7 @@ $$(0, 4)\qquad (2, 4)\qquad (4, 1).$$
 
 The example points can be visualized as follows.
 
-![Example Points](example-data.png){.width-medium}
+![Example Points](example-data.png){.width-medium .themed}
 
 ### Direct Interpolation
 
@@ -178,11 +178,11 @@ $$P(x) = 4 + 0(x-0) - \frac{3}{8}(x-0)(x-2) = 4 + \frac{3}{4}x - \frac{3}{8}x^2$
 
 We have now seen that all polynomial interpolation methods for $n + 1$ data points result in the same unique polynomial of degree $n$. All of the methods for polynomial interpolation were expressed in terms of a basis $B$ weighted by some coefficients. The interpolating polynomial for our previous example looks as follows.
 
-![Interpolating Polynomial of 3 Points](interpolating-polynomial.png){.width-medium}
+![Interpolating Polynomial of 3 Points](interpolating-polynomial.png){.width-medium .themed}
 
 A problem that arises with polynomial interpolation is the interpolating function tends to oscillate more and more with more points added. This is called the *Runge's phenomenon*. It limits the use cases where simple polynomial interpolation is appropriate.
 
-![Interpolating Polynomial of 10 Points](runge-phenomenon.png){.width-medium}
+![Interpolating Polynomial of 10 Points](runge-phenomenon.png){.width-medium .themed}
 
 Another limitation of polynomial interpolation is that touching a single point causes a recalculation of all other points.
 
@@ -207,7 +207,7 @@ In other words we want two consecutive piecewise polynomials to meet at some poi
 
 A linear spline, as the name implies, describes first-degree polynomials of the form $P(x) = c_0 + c_1 x$. Each linear polynomial has $2$ unkown parameters, our spline of $n$ piecewise polynomials for $n + 1$ data points thus has a total of $2n$ unknown parameters.
 
-![Linear Spline](linear-spline.png){.width-medium}
+![Linear Spline](linear-spline.png){.width-medium .themed}
 
 The *continuity condition*, that consecutive polynomials to meet at some point, needs $2n$ free parameters to be fulfilled. Linear splines can thus only fulfill that condition.
 
@@ -235,7 +235,7 @@ $$
 
 Quadratic polynomials add one more degree of freedom, and quadratic splines consequently have $3n$ unknown parameters. Again, we need $2n$ parameters for continuity, but we can now also specify that two consecutive polynomials should match in their first derivative.
 
-![Quadratic Spline](quadratic-spline.png){.width-medium}
+![Quadratic Spline](quadratic-spline.png){.width-medium .themed}
 
 The *smoothness condition* needs $n - 1$ free parameters, because there are $n - 1$ "inner points" for $n + 1$ data points.
 
@@ -275,7 +275,7 @@ $$
 
 With another degree of freedom, we can specify that two consecutive polynomials share a common first and second derivative at the point they meet.
 
-![Cubic Spline](cubic-spline.png){.width-medium}
+![Cubic Spline](cubic-spline.png){.width-medium .themed}
 
 We now have $4n$ unknown parameters of which $2n$ are bound by the continuity condition.
 
