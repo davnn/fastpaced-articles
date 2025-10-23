@@ -61,7 +61,7 @@ Each observation can be seen as a point in $m$-dimensional space. [Covariance](h
 
 $$\text{cov}(x,y) = E[(x_i - \bar x)(y_i - \bar y)]$$
 
-![Covariance as the Sum of Signed Squares [@Hedderich:2015ge]](covariance.png){.width-medium .themed}
+![Covariance as the Sum of Signed Squares [@Hedderich:2015ge]](covariance.png){.width-medium .themed .caption}
 
 The covariance matrix (positive semi-definite $\mathbb R^{m \times m}$) is the collection of covariances between all features. Note that the covariance of a feature with itself is the variance of that feature. Thus, the diagonal of the covariance matrix is the variance of the corresponding feature.
 
