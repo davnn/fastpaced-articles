@@ -2,7 +2,7 @@
 title: Meaningful work
 published: 2025-10-23
 author: David Muhr
-abstract: Meaningful work can be understood as activity that adds value to society. Work adds value to society when its outcomes enhance what that specific society values - whether socially, materially, or environmentally. This article proposes a concise definition of meaningful work grounded in societal value creation.
+abstract: Meaningful work can be understood as activity that adds value to society. Work adds value to society when its outcomes enhance what that specific society values. This article proposes a concise definition of meaningful work grounded in societal value creation.
 --- 
 
 After reading about [Bullshit Jobs](https://en.wikipedia.org/wiki/Bullshit_Jobs), a rant about meaningless jobs, I wanted to find a concise, useful definition of meaningful work. Surprisingly, I found none that were concise and generic, which motivated this short article.
