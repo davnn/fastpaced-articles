@@ -1,5 +1,5 @@
 ---
-title: "Beautiful Interpolation"
+title: "Beautiful interpolation"
 published: 2018-03-01
 author: David Muhr
 mathematics: true

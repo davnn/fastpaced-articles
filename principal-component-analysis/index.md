@@ -1,5 +1,5 @@
 ---
-title: "Principal Component Analysis"
+title: "Principal component analysis"
 published: 2018-02-20
 author: David Muhr
 mathematics: true
