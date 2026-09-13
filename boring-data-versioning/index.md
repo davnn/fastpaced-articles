@@ -1,6 +1,6 @@
 ---
 title: Data versioning should be boring
-published: 2026-09-09
+published: 2026-09-13
 author: David Muhr
 abstract: "Large-file versioning should be simple and fast: no extra service, no separate workflow, no pipeline system. Just files that stay aligned with the commits that reference them."
 ---
