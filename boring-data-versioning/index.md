@@ -38,4 +38,4 @@ Git commits `gat.lock`, which maps paths to content IDs. The bytes live in a cac
 
 The entire engineering effort is deliberately spent on that problem. It is written in Rust, with a clear focus on keeping operations blazingly fast: massively parallel hashing, state-aware synchronization that avoids unnecessary rehashing, copy-on-write materialization to avoid copying cached files and many more optimizations.^[See the [Gat repository](https://github.com/getgat-dev/gat) and [performance guide](https://getgat.dev/guides/improving-performance). Reflinks require filesystem support and configuration; the default materialization strategy is an independent copy.]
 
-I am not suggesting replacing an LFS or DVC setup that already works just because another tool is available. The difference I am aiming for is a narrower scope solving one problem well such that data versioning in Git becomes less of a chore.
+I am not suggesting replacing an LFS or DVC setup that already works just because another tool is available. The difference I am aiming for is solving one problem well such that data versioning in Git becomes less of a chore.
