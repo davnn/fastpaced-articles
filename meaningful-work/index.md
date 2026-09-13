@@ -25,7 +25,7 @@ To make this abstract notion of societal value more operational, we can borrow f
 In lean thinking, all work is categorized as either *value-added* (directly transforming a product or service in ways the customer values) or *non-value-added* (supporting or wasteful activity that does not directly add value).
 Obviously, the value a product or service generates must outweigh its cost, which can be visualized as follows:
 
-![The relationship of value, cost and waste [@hinesLearningEvolveReview2004].](value-cost-waste.png){.width-medium .themed .caption}
+![The relationship of value, cost and waste [@hinesLearningEvolveReview2004].](value-cost-waste.png){.width-medium .themed .caption width=659 height=389 loading=eager}
 
 This diagram illustrates two ways in which work can create societal value.
 First, by reducing waste, meaningful work lowers the cost of producing valuable goods or services, making them more accessible to society.

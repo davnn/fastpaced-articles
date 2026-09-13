@@ -14,7 +14,7 @@ $$Y = P \cdot X$$
 
 The goals of PCA are: (1) minimize redundancy in our data set, and (2) preserve maximal variance within the data.
 
-![Correlation and Redundancy [@Shlens:2014vi]](redundancy.png){.width-large .themed}
+![Correlation and Redundancy [@Shlens:2014vi]](redundancy.png){.width-large .themed width=602 height=252 loading=eager}
 
 PCA comes with assumptions:
 
@@ -27,7 +27,7 @@ Let's calculate an example PCA with Mathematica. We should first generate some e
 distribution = MultinormalDistribution[{1, 2}, {{1, .5}, {.5, 1}}];
 ```
 
-![Two-Dimensional Example Distribution](distribution.png){.width-medium .themed}
+![Two-Dimensional Example Distribution](distribution.png){.width-medium .themed width=360 height=283 loading=eager}
 
 We create $10000$ data points that follow our specified distribution.
 
@@ -35,7 +35,7 @@ We create $10000$ data points that follow our specified distribution.
 data = RandomVariate[distribution, 10^4];
 ```
 
-![Raw Example Data](data.png){.width-medium .themed}
+![Raw Example Data](data.png){.width-medium .themed width=360 height=223 loading=lazy}
 
 ## Standardization
 
@@ -53,7 +53,7 @@ Keep in mind that we want to standardize each feature (column), not each observa
 data = Map[standardize, Transpose[data]] // Transpose;
 ```
 
-![Standardized Example Data](data-standardized.png){.width-medium .themed}
+![Standardized Example Data](data-standardized.png){.width-medium .themed width=360 height=223 loading=lazy}
 
 ## Covariance Matrix
 
@@ -61,7 +61,7 @@ Each observation can be seen as a point in $m$-dimensional space. [Covariance](h
 
 $$\text{cov}(x,y) = E[(x_i - \bar x)(y_i - \bar y)]$$
 
-![Covariance as the Sum of Signed Squares [@Hedderich:2015ge]](covariance.png){.width-medium .themed .caption}
+![Covariance as the Sum of Signed Squares [@Hedderich:2015ge]](covariance.png){.width-medium .themed .caption width=655 height=483 loading=lazy}
 
 The covariance matrix (positive semi-definite $\mathbb R^{m \times m}$) is the collection of covariances between all features. Note that the covariance of a feature with itself is the variance of that feature. Thus, the diagonal of the covariance matrix is the variance of the corresponding feature.
 
@@ -74,7 +74,7 @@ covarianceMatrix[A_] := Module[{Ats},
 
 Recap that one of our goals was to minimize redundancy in our transformed data set. With the notion of covariance, we can state that goal more formally: all off-diagonal items of $\text{covmat}(Y)$ should be zero. In other words: we decorrelate the data.
 
-![Covariance Intuition](covariance.gif){.width-medium .themed}
+![Covariance Intuition](covariance.gif){.width-medium .themed width=360 height=261 loading=lazy}
 
 ```{.mathematica .width-full}
 covmat = covarianceMatrix[data]
@@ -94,7 +94,7 @@ $$
 
 Repeatedly applying a linear transformation, in this case, our covariance matrix, to a randomly chosen vector $(1,0)$ seems to converge in some direction, but what are those mysterious black arrows?
 
-![Applying the Linear Transformation to a Vector](covariance-transform.gif){.width-medium .themed}
+![Applying the Linear Transformation to a Vector](covariance-transform.gif){.width-medium .themed width=360 height=223 loading=lazy}
 
 ## Eigendecomposition
 
@@ -175,13 +175,13 @@ $$
 
 What do you think happens if we apply that transformation matrix to our standardized data set? Notice how the covariance matrix changes.
 
-![Applying the PCA Transformation](pca-projection.gif){.width-medium .themed}
+![Applying the PCA Transformation](pca-projection.gif){.width-medium .themed width=360 height=261 loading=lazy}
 
 In reality, the transformation happens in one step, the dot product of $P \cdot X$. The animation is just for illustrative purposes.
 
 Another challenge is to find a good value for $k$. The sum of all eigenvalues fully explains the variation in the data.
 
-![Explained Variance by Component](explained-variance.png){.width-medium .themed}
+![Explained Variance by Component](explained-variance.png){.width-medium .themed width=528 height=362 loading=lazy}
 
 In our example, the only sensible value for $k$ would be $1$ since we only have $2$ dimensions. It turns out that we will lose $\frac{1}{4}$ of variation by reducing our dataset from two to one dimension.
 
@@ -195,6 +195,6 @@ P =
 \right)
 $$
 
-![Dimensionality Reduction Transformation](dimensionality-reduction.gif){.width-medium .themed}
+![Dimensionality Reduction Transformation](dimensionality-reduction.gif){.width-medium .themed width=360 height=230 loading=lazy}
 
 There is a closely related matrix-decomposition technique known as Singular Value Decomposition (SVD) that can be used to calculate the principal components. See [@Shlens:2014vi] for a PCA tutorial for the relationship between PCA and SVD and how to perform an SVD.
