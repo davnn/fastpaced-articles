@@ -1,9 +1,9 @@
 ---
-title: The importance of local development
+title: Local development
 published: 2024-10-06
 author: David Muhr
-abstract: Local development is crucial for efficient software development, it enables faster iteration, better debugging and ensures consistency between local and production environments. 
---- 
+abstract: Efficient software development benefits from local development, it enables faster iteration, better debugging and ensures consistency between local and production environments. 
+---
 
 A good developer experience (DX) increases productivity, reduces cognitive load, and improves developer satisfaction, 
 leading to higher code quality, faster onboarding, and talent retention.
